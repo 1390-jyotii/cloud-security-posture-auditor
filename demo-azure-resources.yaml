@@ -1,0 +1,74 @@
+# SYNTHETIC DEMO DATA — NOT REAL CLOUD CONFIGURATION
+# Azure-style cloud resource export for CSPM demo purposes
+
+resources:
+  - id: /subscriptions/00000000-demo/resourceGroups/demo-rg/providers/Microsoft.Storage/storageAccounts/demopublicstorage
+    name: demopublicstorage
+    type: storage_account
+    provider: azure
+    region: eastus
+    kind: StorageV2
+    allowBlobPublicAccess: true
+    supportsHttpsTrafficOnly: false
+    encryption_enabled: false
+    encryption:
+      services:
+        blob:
+          enabled: false
+        file:
+          enabled: false
+    logging_enabled: false
+    tags:
+      environment: demo
+      team: platform
+
+  - id: /subscriptions/00000000-demo/resourceGroups/demo-rg/providers/Microsoft.Network/networkSecurityGroups/demo-nsg-open
+    name: demo-nsg-open
+    type: security_group
+    provider: azure
+    region: westeurope
+    securityRules:
+      - name: AllowAllInbound
+        direction: Inbound
+        access: Allow
+        protocol: "*"
+        sourceAddressPrefix: "0.0.0.0/0"
+        destinationPortRange: "*"
+        priority: 100
+    tags:
+      environment: demo
+
+  - id: /subscriptions/00000000-demo/resourceGroups/demo-rg/providers/Microsoft.Sql/servers/demo-sql/databases/demodb
+    name: demo-sql-db
+    type: database
+    provider: azure
+    region: eastus
+    edition: Standard
+    encryption_enabled: false
+    transparentDataEncryption:
+      status: Disabled
+    logging_enabled: false
+    auditingSettings:
+      state: Disabled
+    tags:
+      environment: demo
+
+  - id: /subscriptions/00000000-demo/resourceGroups/demo-rg/providers/Microsoft.Storage/storageAccounts/demosecurestorage
+    name: demosecurestorage
+    type: storage_account
+    provider: azure
+    region: eastus
+    allowBlobPublicAccess: false
+    supportsHttpsTrafficOnly: true
+    encryption_enabled: true
+    encryption:
+      keySource: Microsoft.Keyvault
+      services:
+        blob:
+          enabled: true
+        file:
+          enabled: true
+    logging_enabled: true
+    tags:
+      environment: demo
+      data-classification: internal

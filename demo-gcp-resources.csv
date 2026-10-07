@@ -1,0 +1,7 @@
+id,name,type,provider,region,ACL,block_public_acls,block_public_policy,encryption_enabled,logging_enabled,inbound_cidr,IpProtocol,FromPort,Action,Resource
+gcs-demo-public-bucket,demo-gcs-public,s3_bucket,gcp,us-central1,public-read,false,false,false,false,,,,,
+gcs-demo-secure-bucket,demo-gcs-secure,s3_bucket,gcp,us-central1,private,true,true,true,true,,,,,
+demo-firewall-open,demo-gcp-firewall-open,security_group,gcp,us-east1,,,,,,0.0.0.0/0,tcp,22,,
+demo-firewall-internal,demo-gcp-firewall-internal,security_group,gcp,us-east1,,,,,,10.0.0.0/8,tcp,22,,
+demo-iam-wildcard,DemoGCPWildcard,iam_policy,gcp,global,,,,,,,,,"*","*"
+demo-iam-readonly,DemoGCPReadOnly,iam_policy,gcp,global,,,,,,,,,storage.objects.get,"projects/demo/buckets/demo-secure"

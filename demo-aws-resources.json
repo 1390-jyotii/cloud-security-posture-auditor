@@ -1,0 +1,199 @@
+{
+  "_meta": {
+    "note": "SYNTHETIC DEMO DATA — NOT REAL CLOUD CONFIGURATION",
+    "generated": "2024-01-15T00:00:00Z",
+    "provider": "mixed",
+    "purpose": "CSPM demonstration and testing only"
+  },
+  "resources": [
+    {
+      "id": "arn:aws:s3:::demo-public-data-bucket",
+      "name": "demo-public-data-bucket",
+      "type": "s3_bucket",
+      "provider": "aws",
+      "region": "us-east-1",
+      "BucketName": "demo-public-data-bucket",
+      "ACL": "public-read",
+      "PublicAccessBlockConfiguration": {
+        "BlockPublicAcls": false,
+        "BlockPublicPolicy": false,
+        "IgnorePublicAcls": false,
+        "RestrictPublicBuckets": false
+      },
+      "ServerSideEncryptionConfiguration": null,
+      "encryption_enabled": false,
+      "logging_enabled": false,
+      "tags": { "env": "demo", "team": "data-platform" }
+    },
+    {
+      "id": "arn:aws:iam::123456789012:policy/DemoFullAdminPolicy",
+      "name": "DemoFullAdminPolicy",
+      "type": "iam_policy",
+      "provider": "aws",
+      "region": "global",
+      "PolicyName": "DemoFullAdminPolicy",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": "*",
+          "Resource": "*",
+          "Sid": "FullAdmin"
+        }
+      ],
+      "tags": { "env": "demo" }
+    },
+    {
+      "id": "sg-0abc1234def56789a",
+      "name": "demo-web-sg-open",
+      "type": "security_group",
+      "provider": "aws",
+      "region": "us-west-2",
+      "GroupName": "demo-web-sg-open",
+      "Description": "Demo SG with wide-open rules",
+      "IpPermissions": [
+        {
+          "FromPort": 22,
+          "ToPort": 22,
+          "IpProtocol": "tcp",
+          "Direction": "inbound",
+          "IpRanges": [{ "CidrIp": "0.0.0.0/0", "Description": "all" }]
+        },
+        {
+          "FromPort": 3389,
+          "ToPort": 3389,
+          "IpProtocol": "tcp",
+          "Direction": "inbound",
+          "IpRanges": [{ "CidrIp": "0.0.0.0/0", "Description": "all" }]
+        },
+        {
+          "FromPort": 443,
+          "ToPort": 443,
+          "IpProtocol": "tcp",
+          "Direction": "inbound",
+          "Ipv6Ranges": [{ "CidrIpv6": "::/0" }]
+        }
+      ],
+      "tags": { "env": "demo" }
+    },
+    {
+      "id": "arn:aws:rds:us-east-1:123456789012:db:demo-db-unencrypted",
+      "name": "demo-db-unencrypted",
+      "type": "database",
+      "provider": "aws",
+      "region": "us-east-1",
+      "DBInstanceIdentifier": "demo-db-unencrypted",
+      "DBInstanceClass": "db.t3.micro",
+      "Engine": "mysql",
+      "EngineVersion": "8.0",
+      "StorageEncrypted": false,
+      "encryption_enabled": false,
+      "MultiAZ": false,
+      "logging_enabled": false,
+      "tags": { "env": "demo" }
+    },
+    {
+      "id": "arn:aws:cloudtrail:us-east-1:123456789012:trail/demo-trail-disabled",
+      "name": "demo-trail-disabled",
+      "type": "audit_log",
+      "provider": "aws",
+      "region": "us-east-1",
+      "TrailName": "demo-trail-disabled",
+      "HomeRegion": "us-east-1",
+      "IsLogging": false,
+      "cloudtrail_enabled": false,
+      "logging_enabled": false,
+      "IncludeGlobalServiceEvents": false,
+      "IsMultiRegionTrail": false,
+      "tags": { "env": "demo" }
+    },
+    {
+      "id": "arn:aws:iam::123456789012:policy/DemoBroadS3Policy",
+      "name": "DemoBroadS3Policy",
+      "type": "iam_policy",
+      "provider": "aws",
+      "region": "global",
+      "PolicyName": "DemoBroadS3Policy",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": "*",
+          "Resource": "arn:aws:s3:::*",
+          "Sid": "AllS3Actions"
+        }
+      ],
+      "tags": { "env": "demo" }
+    },
+    {
+      "id": "arn:aws:s3:::demo-secure-bucket",
+      "name": "demo-secure-bucket",
+      "type": "s3_bucket",
+      "provider": "aws",
+      "region": "us-east-1",
+      "BucketName": "demo-secure-bucket",
+      "ACL": "private",
+      "PublicAccessBlockConfiguration": {
+        "BlockPublicAcls": true,
+        "BlockPublicPolicy": true,
+        "IgnorePublicAcls": true,
+        "RestrictPublicBuckets": true
+      },
+      "ServerSideEncryptionConfiguration": {
+        "Rules": [{ "ApplyServerSideEncryptionByDefault": { "SSEAlgorithm": "aws:kms" } }]
+      },
+      "encryption_enabled": true,
+      "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/demo-key-id",
+      "logging_enabled": true,
+      "tags": { "env": "demo", "data-classification": "confidential" }
+    },
+    {
+      "id": "sg-0def9876abc54321b",
+      "name": "demo-internal-sg",
+      "type": "security_group",
+      "provider": "aws",
+      "region": "us-east-1",
+      "GroupName": "demo-internal-sg",
+      "Description": "Secure internal SG",
+      "IpPermissions": [
+        {
+          "FromPort": 443,
+          "ToPort": 443,
+          "IpProtocol": "tcp",
+          "Direction": "inbound",
+          "IpRanges": [{ "CidrIp": "10.0.0.0/8", "Description": "internal only" }]
+        }
+      ],
+      "tags": { "env": "demo" }
+    },
+    {
+      "id": "arn:aws:iam::123456789012:policy/DemoReadOnlyPolicy",
+      "name": "DemoReadOnlyPolicy",
+      "type": "iam_policy",
+      "provider": "aws",
+      "region": "global",
+      "PolicyName": "DemoReadOnlyPolicy",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": ["s3:GetObject", "s3:ListBucket", "s3:HeadObject"],
+          "Resource": "arn:aws:s3:::demo-secure-bucket/*",
+          "Sid": "ReadOnly"
+        }
+      ],
+      "tags": { "env": "demo" }
+    },
+    {
+      "id": "arn:aws:cloudtrail:us-east-1:123456789012:trail/demo-trail-active",
+      "name": "demo-trail-active",
+      "type": "audit_log",
+      "provider": "aws",
+      "region": "us-east-1",
+      "TrailName": "demo-trail-active",
+      "HomeRegion": "us-east-1",
+      "IsLogging": true,
+      "logging_enabled": true,
+      "IncludeGlobalServiceEvents": true,
+      "IsMultiRegionTrail": true,
+      "tags": { "env": "demo" }
+    }
+  ]
+}
